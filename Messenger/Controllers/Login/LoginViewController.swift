@@ -6,12 +6,13 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "Logo")
+        imageView.image = UIImage(systemName: "person.circle")
         imageView.contentMode = .scaleAspectFit
         
         return imageView
@@ -112,7 +113,6 @@ class LoginViewController: UIViewController {
                                    y: passwordField.bottom + 10,
                                    width: scrollView.width - 60,
                                    height: 52)
-        
     }
     
     @objc private func loginButtonTapped() {
@@ -130,7 +130,19 @@ class LoginViewController: UIViewController {
             return
         }
         
-        // Upcoming login
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: {[weak self]AuthDataResult, error in
+            guard let strongSelf = self else {
+                return
+            }
+            guard let result = AuthDataResult, error == nil else {
+                print("failed to log in")
+                return
+            }
+            
+            let user = result.user
+            print("Logged in user \(user)")
+            strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+        })
     }
     
     func alertUserLoginError(){
