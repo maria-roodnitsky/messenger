@@ -169,6 +169,9 @@ class LoginViewController: UIViewController {
             }
             
             let user = result.user
+            
+            UserDefaults.standard.set(email, forKey: "email")
+            
             print("Logged in user \(user)")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
@@ -230,6 +233,8 @@ extension LoginViewController: LoginButtonDelegate {
                 return
             }
             
+            UserDefaults.standard.set(email, forKey: "email")
+            
             let nameComponents = userName.components(separatedBy: " ")
             guard nameComponents.count == 2 else {
                 return
@@ -237,6 +242,7 @@ extension LoginViewController: LoginButtonDelegate {
             
             let firstName = nameComponents[0]
             let lastName = nameComponents[1]
+            
             
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
