@@ -12,4 +12,9 @@ pod 'Firebase/Database'
 # Facebook
 pod 'FBSDKLoginKit'
 
+pod 'MessageKit'
+pod 'JGProgressHUD'
+pod 'RealmSwift'
+pod 'SDWebImage'
+
 end
